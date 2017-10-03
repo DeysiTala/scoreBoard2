@@ -1,16 +1,62 @@
-
-class Model 
-{
-
-   constructor () {
-    this.name =["Jim Hoskins","Andree Hoskins","Alena Hoskins"];
-    this.score=[31,35,42];
-    this.id=[1, 2, 3];
-    this.inputValue = null;
-   this.render = undefined;
+let PLAYERS = [
+  {
+    name: "Jim Hoskins",
+    score: 31,
+    id: 1,
+  },
+   {
+    name: "Andree Hoskins",
+    score: 35,
+    id: 2,
+  },
+   {
+    name: "Alena Hoskins",
+    score: 42,
+    id: 3,
+  },
+  {
+    name: "Alena Hoskins",
+    score: 42,
+    id: 4,
+  },
+];
+class Modal{
+  constructor () {
+    
+      this.inputValue = null;
+      this.render = undefined;
+      this.player = PLAYERS;
+      this.callback = null;
    }
   
-  }  
+
+  subscribe(render) {
+     this.callback = render;
+  }
+
+  notify() {
+     this.callback();
+  }
+  inform() {
+    console.log(this.other.map(e => e.text));
+    this.render();
+ }
+ addTodo(text) {
+    this.other.push({
+       id: Utils.uuid(),
+       text: text,
+       completed: false
+    });
+    this.inform();
+ }
+ updateTodo(index, todo) {
+    this.other[index] = todo;
+    this.inform();
+ }
+}
+   
+  
+    
 
 const Header = (props)=>{
  let points =props.players.map((e) => e.score).reduce((a,b) =>{return a+ b});
@@ -72,4 +118,4 @@ const Application = ({title, players}) => {
    ) ;
 }
 
-ReactDOM.render(<Application title="Scoreboard" players = {Model}/>, document.getElementById('container'));
+ReactDOM.render(<Application title="Scoreboard" players = {PLAYERS}/>, document.getElementById('container'));
