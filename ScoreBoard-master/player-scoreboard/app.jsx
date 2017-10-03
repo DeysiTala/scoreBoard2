@@ -41,7 +41,7 @@ class Modal{
     console.log(this.other.map(e => e.text));
     this.render();
  }
- addTodo(text) {
+ addPlayer(text) {
     this.other.push({
        id: Utils.uuid(),
        text: text,
@@ -49,7 +49,7 @@ class Modal{
     });
     this.inform();
  }
- updateTodo(index, todo) {
+ updatePlayer(index, todo) {
     this.other[index] = todo;
     this.inform();
  }
