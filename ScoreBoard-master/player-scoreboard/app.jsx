@@ -107,8 +107,10 @@ let PlayerForm= React.createClass({
   render: function(){
     return(
       <div className="add-player-form">
-        <form>
-          <p><input type="text" placeholder="ENTER A NAME"></input></p>
+        <form  onSubmit={e => {
+               e.preventDefault();
+               model.add(model.text)}}>
+          <p><input type="text" placeholder="ENTER A NAME" onChange={e => (model.text = e.target.value)}></input></p>
           <p><input type="submit" value="Add Player"></input></p>
     </form>
     </div>
@@ -117,14 +119,38 @@ let PlayerForm= React.createClass({
 })
 
 
-const Application = ({title, players}) => {
+const Application = ({title, model}) => {
    return (
      <div className="scoreboard">
-      <Header players={players}/>
-      <PlayerList players={players}/>
-      <PlayerForm />      
+      <Header model={model}/>
+      <PlayerList model={model}/>
+      <PlayerForm model={model} />      
    </div>
    ) ;
 }
+let model = new Model();
 
-ReactDOM.render(<Application title="Scoreboard" players = {PLAYERS}/>, document.getElementById('container'));
+let counter = 1;
+let render =()=>{
+  ReactDOM.render(<Application title="Scoreboard" model = {model}/>, document.getElementById('container'));
+};
+
+model.subscribe(render);
+
+render()
+
+/*let model = new Model();
+
+let counter = 1;
+
+let render = () => {
+  console.log('render times: ', counter++);
+  ReactDOM.render(
+    <Application title="TodoApp" model={model} />,
+    document.getElementById('container')
+  );
+};
+
+model.subscribe(render);
+
+render();*/
