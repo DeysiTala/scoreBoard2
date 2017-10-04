@@ -98,7 +98,7 @@ const PlayerList=({model})=>{
     model.player.map((value,index)=>{
       return(
         <div className="player" key={Utils.uuid()}>
-          <div className="player-name">{value.score}</div>
+          <div className="player-name">{value.name}</div>
           <div className="player-score counter">
             <button className="counter-action decrement btn" onClick={()=> model.downloadPlayer(index)}>-</button>
               <p className="counter-score">{value.score}</p>
