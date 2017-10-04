@@ -20,12 +20,14 @@ let PLAYERS = [
     id: 4,
   },
 ];
-class Modal{
+
+class Model{
   constructor () {
     
       this.inputValue = null;
       this.render = undefined;
       this.player = PLAYERS;
+      this.text = "";
       this.callback = null;
    }
   
@@ -45,8 +47,8 @@ class Modal{
     this.player.push({
        id: Utils.uuid(),
        name: text,
-       score: 0,
-       completed: false
+       score: 0
+       /*completed: false*/
     });
     this.notify();
  }
@@ -60,21 +62,26 @@ class Modal{
 downloadPlayer(index){
  if(this.player[index].score >=0){
 
-  this.player[index].socre --;
+  this.player[index].score --;
  }
  this.notify();
 }
 
 }
    
- const Header = ({model})=>{
+  
+    
+
+const Header = ({model})=>{
  let points =model.player.map((e) => e.score).reduce((a,b) =>{return a+ b});
  return(
    <div className="header">
      <div className= "count">
        <table>
+         <tbody>
          <tr><td>PLAYERS:</td>{model.player.length}</tr>
          <tr><td>TOTAL:</td>{points}</tr>
+         </tbody>
          </table>
          </div>
          <div className="stopwatch">
@@ -88,13 +95,13 @@ downloadPlayer(index){
 }
 const PlayerList=({model})=>{
   return(<div>{
-    model.players.map((value,index)=>{
+    model.player.map((value,index)=>{
       return(
         <div className="player" key={Utils.uuid()}>
-          <div className="player-name">{value.name}</div>
+          <div className="player-name">{value.score}</div>
           <div className="player-score counter">
             <button className="counter-action decrement btn" onClick={()=> model.downloadPlayer(index)}>-</button>
-              <p className="counter-score">{data.score}</p>
+              <p className="counter-score">{value.score}</p>
               <button className="counter-action increment btn" onClick={()=> model.updatePlayer(index)}>+</button>
               </div>
               </div>
@@ -109,7 +116,7 @@ let PlayerForm= React.createClass({
       <div className="add-player-form">
         <form  onSubmit={e => {
                e.preventDefault();
-               model.add(model.text)}}>
+               model.addPlayer(model.text)}}>
           <p><input type="text" placeholder="ENTER A NAME" onChange={e => (model.text = e.target.value)}></input></p>
           <p><input type="submit" value="Add Player"></input></p>
     </form>
