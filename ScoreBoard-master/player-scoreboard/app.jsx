@@ -42,29 +42,38 @@ class Modal{
     this.render();
  }
  addPlayer(text) {
-    this.other.push({
+    this.player.push({
        id: Utils.uuid(),
-       text: text,
+       name: text,
+       score: 0,
        completed: false
     });
-    this.inform();
+    this.notify();
  }
- updatePlayer(index, todo) {
-    this.other[index] = todo;
-    this.inform();
+ updatePlayer(index) {
+    if(this.player[index].score>= 0){
+
+      this.player[index].score ++ ;
+    }
+    this.notify();
  }
+downloadPlayer(index){
+ if(this.player[index].score >=0){
+
+  this.player[index].socre --;
+ }
+ this.notify();
+}
+
 }
    
-  
-    
-
-const Header = (props)=>{
- let points =props.players.map((e) => e.score).reduce((a,b) =>{return a+ b});
+ const Header = ({model})=>{
+ let points =model.player.map((e) => e.score).reduce((a,b) =>{return a+ b});
  return(
    <div className="header">
      <div className= "count">
        <table>
-         <tr><td>PLAYERS:</td>{props.players.length}</tr>
+         <tr><td>PLAYERS:</td>{model.player.length}</tr>
          <tr><td>TOTAL:</td>{points}</tr>
          </table>
          </div>
@@ -77,16 +86,16 @@ const Header = (props)=>{
            </div>
  )
 }
-const PlayerList=(props)=>{
+const PlayerList=({model})=>{
   return(<div>{
-    props.players.map((data,index)=>{
+    model.players.map((value,index)=>{
       return(
-        <div className="player">
-          <div className="player-name">{data.name}</div>
-          <div className="player-socore counter">
-            <button className="counter-action decrement btn">-</button>
+        <div className="player" key={Utils.uuid()}>
+          <div className="player-name">{value.name}</div>
+          <div className="player-score counter">
+            <button className="counter-action decrement btn" onClick={()=> model.downloadPlayer(index)}>-</button>
               <p className="counter-score">{data.score}</p>
-              <button className="counter-action increment btn">+</button>
+              <button className="counter-action increment btn" onClick={()=> model.updatePlayer(index)}>+</button>
               </div>
               </div>
       
